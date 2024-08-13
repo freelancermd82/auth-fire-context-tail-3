@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
 
-    const { signIn } = useContext(AuthContext);
+    const { signIn , signInWithGoogle} = useContext(AuthContext);
 
     const handleLogin = event => {
         event.preventDefault();
@@ -18,10 +18,22 @@ const Login = () => {
             .then(result => {
                 const signInUser = result.user;
                 console.log(signInUser);
+                form.reset();
             })
             .catch(error => {
                 console.log(error);
             })
+    }
+
+    const handleGoogleSignIn = () => {
+        signInWithGoogle()
+        .then(result => {
+            const loggedUser = result.user;
+            console.log(loggedUser);
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
 
@@ -55,6 +67,9 @@ const Login = () => {
                     <Link to="/register">
                         <button className="btn btn-active btn-link">New to Daisy Ui?register</button>
                     </Link>
+                    <div>
+                    <button onClick={handleGoogleSignIn} className="btn btn-active btn-primary">Google</button>
+                    </div>
                 </div>
             </div>
         </div>
